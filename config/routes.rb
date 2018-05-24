@@ -1377,6 +1377,22 @@ Rails.application.routes.draw do
       )
     },
 
+    :physical_chassis    =>  {
+      :get  =>  %w(
+        download_data
+        perf_top_chart
+        protect
+        show_list
+        show
+      ),
+
+      :post   =>  %w(
+        button
+        show_list
+        quick_search
+      )
+    },
+
     :guest_device    =>  {
       :get  =>  %w(
         show_list
