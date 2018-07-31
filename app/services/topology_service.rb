@@ -46,6 +46,8 @@ class TopologyService
       :miq_id => entity.id,
       :key    => entity_id(entity)
     }
+
+    # result.merge(build_filter_properties(entity))
   end
 
   def group_nodes_by_model(nodes)
@@ -82,12 +84,14 @@ class TopologyService
     preloaded                      = @providers.includes(included_relations)
     nodes, edges                   = map_to_graph(preloaded, build_entity_relationships(included_relations))
     filtered_nodes, filtered_edges = rbac_filter_nodes_and_edges(nodes, edges)
+    filter_properties              = self.class.instance_variable_get(:@filter_properties)
 
     {
-      :items     => filtered_nodes,
-      :relations => filtered_edges,
-      :kinds     => build_kinds,
-      :icons     => icons
+      :items             => filtered_nodes,
+      :relations         => filtered_edges,
+      :kinds             => build_kinds,
+      :filter_properties => filter_properties,
+      :icons             => icons
     }
   end
 
@@ -152,4 +156,10 @@ class TopologyService
     end
     hash
   end
+
+  # def build_filter_properties(entity)
+  #   self.class.instance_variable_get(:@filter_properties).each_with_object({}) do |prop, hash|
+  #     hash[prop] = entity.try(prop) if entity.try(prop).present?
+  #   end
+  # end
 end

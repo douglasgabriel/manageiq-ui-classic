@@ -23,6 +23,10 @@
         %label
           %i.pficon.pficon-screen
           = _("VMs")
+      %kubernetes-topology-icon{tooltipOptions, "filter-property" => "status", "filter-value" => "Unknown"}
+        %label
+          %i.pficon.pficon-screen
+          = _("Custom")
 
   .alert.alert-info.alert-dismissable
     %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", :type => "button"}
@@ -33,7 +37,7 @@
 
   = render :partial => "shared/topology/not_found_vm"
 
-  %kubernetes-topology-graph{:items => "vm.items", :relations => "vm.relations", :kinds => "vm.kinds"}
+  %kubernetes-topology-graph{:items => "vm.items", :relations => "vm.relations", :kinds => "vm.kinds", :filters => "vm.filters"}
 
 :javascript
   miq_bootstrap('.topology');
